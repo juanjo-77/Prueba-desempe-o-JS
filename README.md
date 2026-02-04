@@ -1,37 +1,42 @@
-Crudzaso 
+Crudzaso
 
-Bienvenido a Crudzaso Una plataforma diseñada para el seguimiento  académico. Este proyecto permite a los estudiantes gestionar sus tareas , con persistencia de datos.
-
-Características :
-
-Autenticación: Tiene un login que dependiendo si eres usuario o admin te lleva a distintas partes y tiene donde hacer un registro de usuario
-
-Gestión de Tareas (CRUD): Creación, visualización, cambio de estado y eliminación de tareas.
-
-Persistencia de Datos: Uso de Web Storage API (LocalStorage) para mantener la información tras recargar la página.
-
-Dashboard: Visualización de estadísticas en tiempo real (Total, Completadas, Pendientes).
-
-Diseño Responsive: Adaptable a dispositivos móviles y escritorio.
+Welcome to Crudzaso, a platform designed for tracking academic tasks. This project allows students to manage their tasks with persistent data, providing an interface for both users and administrators.
 
 
-
- Funcionamiento:
-
-1. Autenticación con JSON
-El sistema captura los datos que contiene el archivo json y dependiendo de ellos te lleva a los diferentes apartados
+Features:
 
 
-2. Gestión de Tareas
-Las tareas se manejan mediante un array de objetos.
+Authentication: a login system that distinguishes between users and administrators. Depending on your role, you will be directed to different pages, with the possibility of accessing a register.
 
-.find(): Para localizar una tarea específica y alternar su estado entre Pendiente y Completada.
-.filter(): Para eliminar tareas del sistema o filtrar la vista actual.
-.map(): Para gestionar los ids únicos de forma dinámica.
+Task management (CRUD): you can create, view, update the status, and delete tasks. The system allows you to mark tasks as pending or completed.
 
-4. Estadísticas
-5. 
-El Dashboard calcula automáticamente el progreso académico filtrando el array de tareas global y actualizando el DOM en tiempo real.
+Data persistence: uses the web storage API (LocalStorage) to retain information even after refreshing or closing the browser, for login and users who will be admitted to the page.
 
- Autor
-Juan Jose Peña Muñoz - Desarrollador de software 
+Control panel: view real-time statistics showing the total number of tasks, completed tasks, and pending tasks.
+
+Responsive design: the interface adapts to both mobile devices and computers, ensuring usability on different screen sizes.
+
+
+How it works:
+
+JSON authentication:
+The system uses a JSON file to authenticate users. Based on the JSON data, users are redirected to different sections of the site. Administrators can access a special control panel to monitor user activity.
+
+
+
+Task management (CRUD):
+
+
+Tasks are managed via an array of objects, where:
+
+.find(): Locates a specific task and toggles its status between Pending and Completed.
+
+.filter(): Removes tasks from the system or filters the tasks displayed in the view.
+
+.map(): Dynamically manages unique task IDs and updates the interface.
+
+Statistics:
+The Dashboard automatically calculates and updates statistics like the number of Total, Completed, and Pending tasks by filtering the global task array in real-time.
+
+Admin Dashboard:
+Admins have access to a special section that uses an iframe to view what the users are doing in real-time.
