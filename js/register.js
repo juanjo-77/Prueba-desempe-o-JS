@@ -1,41 +1,50 @@
-// Referencias a los elementos
-const btnSign = document.getElementById("btnSign");
-const btnGoLogin = document.getElementById("sign_in");
+document.addEventListener("DOMContentLoaded", () => {
+    // Referencias a los botones y elementos del formulario
+    const btnSign = document.getElementById("btnSign");
+    const btnGoLogin = document.getElementById("sign_in");
 
-// Función para guardar el registro
-btnSign.addEventListener("click", () => {
-    const name = document.getElementById("regName").value;
-    const email = document.getElementById("regEmail").value;
-    const pass = document.getElementById("regPass").value;
-    const confirmPass = document.getElementById("regConfirmPass").value;
+    // Función para guardar el registro
+    btnSign.addEventListener("click", () => {
+        const name = document.getElementById("regName").value;
+        const email = document.getElementById("regEmail").value;
+        const pass = document.getElementById("regPass").value;
+        const confirmPass = document.getElementById("regConfirmPass").value;
 
-    // Validación 
-    if (!name || !email || !pass) {
-        alert("Por favor, rellena todos los campos");
-        return;
-    }
+        // Validación
+        if (!name || !email || !pass || !confirmPass) {
+            alert("Please fill in all fields.");
+            return;
+        }
 
-    if (pass !== confirmPass) {
-        alert("Las contraseñas no coinciden");
-        return;
-    }
+        if (pass !== confirmPass) {
+            alert("Passwords do not match.");
+            return;
+        }
 
-    // 2. Crear el objeto de usuario
-    const newUser = {
-        fullName: name,
-        email: email,
-        password: pass 
-    };
+        // Crear el objeto de usuario
+        const newUser = {
+            fullName: name,
+            email: email,
+            password: pass
+        };
 
-    // guardar en LocalStorage convirtiendo a JSON
+        // Obtener usuarios existentes (si hay)
+        const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-    localStorage.setItem("userData", JSON.stringify(newUser));
+        // Agregar el nuevo usuario al array
+        existingUsers.push(newUser);
 
-    alert("Cuenta creada con exito Ahora puedes iniciar sesion.");
-    window.location.href = "login.html";
-});
+        // Guardar el array de usuarios en localStorage
+        localStorage.setItem("users", JSON.stringify(existingUsers));
 
-// Botón para ir al login
-btnGoLogin.addEventListener("click", () => {
-    window.location.href = "login.html";
+        alert("Account created successfully. You can now log in.");
+
+        // Redirigir al login
+        window.location.href = "login.html";
+    });
+
+    // Botón para ir al login
+    btnGoLogin.addEventListener("click", () => {
+        window.location.href = "login.html";
+    });
 });

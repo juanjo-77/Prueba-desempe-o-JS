@@ -1,3 +1,22 @@
+// 🔐 GUARDIAN
+authGuard("user");
+
+function authGuard(rolePermitido) {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    if (user.role !== rolePermitido) {
+        alert("No tienes permiso para entrar aquí");
+        window.location.href = "login.html";
+    }
+}
+
+
+
 
 // lee las tareas de LocalStorage, si no hay nada, array vacío []
 let tareas = JSON.parse(localStorage.getItem("misTareas")) || [];
@@ -39,8 +58,6 @@ function cambiarEstado(id) {
     guardarYRenderizar(); //crea otro array con esos cambios
 }
 
-
-
 function renderizar() {
     const container = document.getElementById("tasksContainer"); // Donde se meten las tarjetas
     container.innerHTML = ''; // Limpia el contenedor para no repetir tareas
@@ -61,7 +78,8 @@ function renderizar() {
             <div class="acciones">
                 <button onclick="cambiarEstado(${t.id})">${t.estado === 'pendiente' ? '✅' : '↩️'}</button>
                 <button onclick="eliminarTarea(${t.id})" title="Delete">🗑️</button>
-            </div>
+                <button onclick="editarTarea(${t.id})" title="Edit">✏️</button> <!-- Aquí está el botón de edición -->
+                </div>
 
         `;
         container.appendChild(div); // Agrega la tarjeta al contenedor del dashboard
@@ -78,10 +96,39 @@ function actualizarStats() {
     document.getElementById("pendientes").innerHTML = `<p>Pending</p>${tareas.length - completas}`;
 }
 
+function editarTarea(id) {
+    // Encuentra la tarea que se va a editar
+    const tarea = tareas.find(t => t.id === id);
+    
+    // Rellena el formulario con los valores actuales de la tarea
+    document.getElementById("taskTitle").value = tarea.titulo;
+    document.getElementById("taskDescripcion").value = tarea.descripcion;
+
+    // Guardamos el ID de la tarea que estamos editando, para luego referenciarla
+    document.getElementById('taskForm').onsubmit = (e) => {
+        e.preventDefault(); // Evita que la página se recargue
+
+        // Solo actualizamos los campos que el usuario editó
+        tarea.titulo = document.getElementById("taskTitle").value;
+        tarea.descripcion = document.getElementById("taskDescripcion").value;
+
+        // Guardar y renderizar
+        guardarYRenderizar(); 
+
+        // Cerrar el modal
+        document.getElementById("modalTarea").style.display = 'none'; 
+    };
+
+    // Mostrar el modal para editar
+    document.getElementById('modalTarea').style.display = 'flex';
+}
+
+
 
 // Captura el envío del formulario del modal
 document.getElementById('taskForm').onsubmit = (e) => {
     e.preventDefault(); // Evita que la página se recargue
+
     const titulo = document.getElementById("taskTitle").value;
     const cat = document.getElementById("taskCategory").value;
     const descripcion = document.getElementById("taskDescripcion").value;
@@ -95,6 +142,7 @@ document.getElementById('taskForm').onsubmit = (e) => {
 // coge al modal y hasta que no le den click aparece invisible
 document.querySelector(".btnNew").onclick = () => document.getElementById('modalTarea').style.display = 'flex';
 document.getElementById("btnCancel").onclick = () => document.getElementById('modalTarea').style.display = 'none';
+
 
 // Carga inicial al abrir el archivo
 renderizar();

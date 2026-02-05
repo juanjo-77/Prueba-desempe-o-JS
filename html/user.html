@@ -54,6 +54,7 @@
 
         <div class="modal-content">
             <h2>Create New Task</h2>
+            
             <form id="taskForm">
                 <label>Task Title</label>
                 <input type="text" id="taskTitle" placeholder="complete 3 Report" required>
@@ -90,6 +91,20 @@
         </div>
 
     </div>
+        <!-- Modal for editing task -->
+    <div id="modalTarea" style="display:none;">
+        <form id="taskForm">
+            <label for="taskTitle">Title:</label>
+            <input type="text" id="taskTitle" required>
+
+            <label for="taskDescripcion">Description:</label>
+            <textarea id="taskDescripcion" required></textarea>
+
+            <button type="submit">Save Changes</button>
+            <button type="button" id="btnCancel">Cancel</button>
+        </form>
+    </div>
+
 
 
 
